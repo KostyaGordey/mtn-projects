@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<project name="Lab3" basedir="." default="dist">
+
+<target name="clean" depends="init">
+  <delete dir="${build}"/>
+  <delete dir="${dist}"/>
+</target>
+
+<target name="init">
+  <property name="basedir" location="."/>
+  <property name="src" location="src"/>
+  <property name="test" location="test/com/test"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+  <property name="classes" location="${build}/classes"/>
+  <property name="package" value="com.test"/>
+  <property name="main-class" value="${package}.Project"/>
+
+  <path id="libs">
+   <fileset dir="lib">
+    <include name="*.jar"/>
+   </fileset>
+  </path>
+
+
+  <tstamp>
+   <format property="time" pattern="MM-dd-yyyy hh:mm:ss aa"/>
+  </tstamp>
+</target>
+
+<target name="compile" depends="clean">
+  <mkdir dir="${classes}"/>
+  <javac srcdir="${src}" destdir="${classes}" includeantruntime="false">
+   <classpath>
+    <path refid="libs"/>
+   </classpath>
+  </javac>
+</target>
+
+<target name="test" depends="compile">
+  <junit>
+   <classpath>
+    <pathelement location="${classes}"/>
+    <path refid="libs"/>
+   </classpath>
+   <batchtest>
+    <fileset dir="${test}">
+     <include name="/*Test*" />
+    </fileset>
+   </batchtest>
+   <formatter type="brief" usefile="false"/>
+  </junit>
+</target>
+
+<target name="package" depends="compile">
+  <jar destfile="${build}/${ant.project.name}.jar" basedir="${classes}">
+   <manifest>
+    <attribute name="Main-Class" value="${main-class}"/>
+   </manifest>
+  </jar>
+</target>
+
+<target name="dist" depends="package">
+  <mkdir dir="${dist}"/>
+  <zip destfile="${dist}/${ant.project.name}-${time}.zip">
+   <fileset dir="${build}" includes="${ant.project.name}.jar"/>
+   <fileset dir="${basedir}" includes="config/*.properties"/>
+   <fileset dir="${basedir}" includes="lib/*.jar"/>
+  </zip>
+ </target>
+
+</project>
