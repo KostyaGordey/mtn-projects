@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+			http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.test</groupId>
+  <artifactId>maven-task</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0</version>
+  <name>Maven task</name>
+
+<properties>
+    <dependencyCommonsID>commons-collections</dependencyCommonsID>
+    <dependencyJunitID>junit</dependencyJunitID>
+    <timestamp>${maven.build.timestamp}</timestamp>
+    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+</properties>
+ 
+
+<dependencies>
+
+<dependency>
+    <groupId>${dependencyCommonsID}</groupId>
+    <artifactId>${dependencyCommonsID}</artifactId>
+    <version>3.2.1</version>
+</dependency>
+
+<dependency>
+      <groupId>${dependencyJunitID}</groupId>
+      <artifactId>${dependencyJunitID}</artifactId>
+      <version>4.0</version>
+      <scope>test</scope>
+</dependency>
+</dependencies>
+
+<build>
+     <finalName>${project.artifactId}-${project.version}-${timestamp}</finalName>
+     <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <descriptors>
+            <descriptor>src/assembly/src.xml</descriptor>
+          </descriptors>
+          <formats>
+            <format>zip</format>
+          </formats>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>     
+</build>
+</project>
+

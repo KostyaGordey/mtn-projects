@@ -3,3 +3,5 @@ dist
 # Package Files #
 *.war
 *.ear
+*.log
+module3/maven-task/dependency

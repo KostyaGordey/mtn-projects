@@ -37,22 +37,26 @@
   </javac>
 </target>
 
-<target name="test" depends="compile">
-  <junit>
+<target name="compile-test" depends="compile">
+  <javac srcdir="test" destdir="${classes}" includeantruntime="false">
+   <classpath>
+    <path refid="libs"/>
+   </classpath>
+  </javac>
+</target>
+
+<target name="test" depends="compile-test">
+  <junit printsummary="no" fork="false" haltonfailure="yes">
    <classpath>
     <pathelement location="${classes}"/>
     <path refid="libs"/>
-   </classpath>
-   <batchtest>
-    <fileset dir="${test}">
-     <include name="/*Test*" />
-    </fileset>
-   </batchtest>
+   </classpath>  
    <formatter type="brief" usefile="false"/>
+   <test name="com.test.UnitTest" />
   </junit>
 </target>
 
-<target name="package" depends="compile">
+<target name="package" depends="test">
   <jar destfile="${build}/${ant.project.name}.jar" basedir="${classes}">
    <manifest>
     <attribute name="Main-Class" value="${main-class}"/>
