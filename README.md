@@ -1,4 +1,4 @@
 mtn-projects
 ============
 
-Projects for MTN 2017 lab
+Testing Jenkins GitHub Pull request plugins
